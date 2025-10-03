@@ -32,3 +32,6 @@ config.json
 compile_commands.json
 src/dpp/dpp.rc
 .DS_STORE
+
+# bazel
+bazel-*
