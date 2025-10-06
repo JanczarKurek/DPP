@@ -12,7 +12,10 @@ cc_library(
   hdrs = glob([
     "include/mls/*.h",
   ]),
-  implementation_deps = [":mlspp_internal_headers"],
+  implementation_deps = [
+    ":mlspp_internal_headers",
+    "//mlspp/lib/hpke",
+  ],
   strip_include_prefix = "include",
   copts = ["-std=c++17"],
   visibility = ["//visibility:public"],

@@ -16,7 +16,11 @@ cc_library(
   strip_include_prefix = "include",
   implementation_deps = [
     ":internal_headers",
-    "@openssl//:openssl",
+    "@openssl//:crypto",
+  ],
+  copts = [
+    "-std=gnu++17",
+    "-DWITH_OPENSSL3",
   ],
   visibility = ["//visibility:public"],
 )

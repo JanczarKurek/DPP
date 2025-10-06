@@ -50,11 +50,12 @@ cc_library(
     ], ["include/dpp/json.h"]),
     srcs = glob([
         "src/**/*.cpp",
-    ]),
+    ], ["src/unittest/*.cpp"]),
     strip_include_prefix = "include",
     deps = [
         ":dave_includes",
         ":json",
+        "//mlspp/lib/bytes",
         "@openssl//:openssl",
     ],
     copts = ["-std=c++17"],
