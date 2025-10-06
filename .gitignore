@@ -35,4 +35,3 @@ src/dpp/dpp.rc
 
 # bazel
 bazel-*
-MODULE.bazel.lock
