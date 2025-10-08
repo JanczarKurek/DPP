@@ -18,7 +18,9 @@ cc_library(
 
 config_setting(
     name = "no_coro",
-    values = {"define": "DPP_CO_CORO=1"},
+    values = {
+      "define": "DPP_NO_CORO=1"
+    },
 )
 
 config_setting(
@@ -41,6 +43,16 @@ cc_library(
   strip_include_prefix = "src/dpp/dave",
 )
 
+# ./coro_loop/coro_loop.cpp:int main() {
+# ./davetest/dave.cpp:int main() {
+# ./httpservertest/httpservertest.cpp:int main() {
+# ./soaktest/soak.cpp:int main() {
+# ./sockettest/socket.cpp:int main() {
+# ./unittest/test.cpp:int main(int argc, char *argv[])
+# ./unittest/test.cpp:int main() {\n\
+# ./unittest/test.cpp:int main() {\n\
+# ./userapptest/userapp.cpp:int main() {
+
 cc_library(
     name = "dpp",
     hdrs = glob([
@@ -50,15 +62,33 @@ cc_library(
     ], ["include/dpp/json.h"]),
     srcs = glob([
         "src/**/*.cpp",
-    ], ["src/unittest/*.cpp"]),
+        "src/dpp/voice/enabled/enabled.h",
+        "src/dpp/socketengines/kqueue-facade.h",
+    ], ["src/unittest/*.cpp", "src/dpp/voice/stub/stubs.cpp",
+        "src/dpp/socketengines/kqueue.cpp", # TODO: Add support for bsd here
+        "src/coro_loop/coro_loop.cpp",
+        "src/davetest/**",
+        "src/httpservertest/**",
+        "src/unittest/**",
+        "src/userapptest/**",
+        "src/soaktest/**",
+        "src/sockettest/**",
+        "src/dpp/socketengines/poll.cpp", # TODO: Make this configurable? (may remove epoll.cpp instead)
+    ]),
     strip_include_prefix = "include",
     deps = [
         ":dave_includes",
         ":json",
+        "//mlspp",
         "//mlspp/lib/bytes",
         "@openssl//:openssl",
     ],
-    copts = ["-std=c++17"],
+    copts = [
+      "-std=c++20",
+    ],
+    defines = {
+      "HAVE_VOICE": "1",
+    },
 )
 
 

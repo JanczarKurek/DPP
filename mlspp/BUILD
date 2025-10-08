@@ -14,6 +14,8 @@ cc_library(
   ]),
   implementation_deps = [
     ":mlspp_internal_headers",
+  ],
+  deps = [
     "//mlspp/lib/hpke",
   ],
   strip_include_prefix = "include",
