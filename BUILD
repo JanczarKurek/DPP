@@ -89,6 +89,7 @@ cc_library(
     defines = {
       "HAVE_VOICE": "1",
     },
+    visibility = ["//visibility:public"],
 )
 
 
