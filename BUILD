@@ -80,18 +80,30 @@ cc_library(
         ":dave_includes",
         ":json",
         "//mlspp",
+        "//mlspp/lib/tls_syntax:tls",
         "//mlspp/lib/bytes",
         "@openssl//:openssl",
+        "@openssl//:ssl",
     ],
     copts = [
       "-std=c++20",
     ],
+    linkopts = ["-lz", "-lopus"],
     defines = {
       "HAVE_VOICE": "1",
     },
     visibility = ["//visibility:public"],
 )
 
+cc_binary(
+  name = "userapptest",
+  srcs = [
+    "src/userapptest/userapp.cpp",
+  ],
+  deps = [
+    ":dpp",
+  ],
+)
 
 toolchain(
     name = "cpp_toolchain",
